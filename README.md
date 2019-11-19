@@ -2,15 +2,15 @@
 
 ## Getting started
 
-`$ npm install react-native-beacon --save`
+`$ npm install @eyro/react-native-beacon --save`
 
 ### Mostly automatic installation
 
-`$ react-native link react-native-beacon`
+`$ react-native link @eyro/react-native-beacon`
 
 ## Usage
 ```javascript
-import CBBeacon from 'react-native-beacon';
+import CBBeacon from '@eyro/react-native-beacon';
 
 // TODO: What to do with the module?
 CBBeacon;
