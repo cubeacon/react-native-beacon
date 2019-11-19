@@ -44,8 +44,8 @@ export type Beacon = {
     macAddress ? : string, // android only
 };
 
-type AuthorizationStatusCallback = (status: AuthorizationStatus) => void;
-type RangingDidRangeBeaconsCallback = (region: Region, beacons: Array < Beacon > ) => void;
-type MonitoringDidEnterRegionCallback = (region: Region) => void;
-type MonitoringDidExitRegionCallback = (region: Region) => void;
-type MonitoringDidDetermineStateCallback = (region: Region, state: RegionState) => void;
+export type AuthorizationStatusCallback = (status: AuthorizationStatus) => void;
+export type RangingDidRangeBeaconsCallback = (region: Region, beacons: Array < Beacon > ) => void;
+export type MonitoringDidEnterRegionCallback = (region: Region) => void;
+export type MonitoringDidExitRegionCallback = (region: Region) => void;
+export type MonitoringDidDetermineStateCallback = (region: Region, state: RegionState) => void;
