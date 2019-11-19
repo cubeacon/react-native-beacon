@@ -50,7 +50,7 @@
     
     return @{
         @"identifier": region.identifier,
-        @"proximityUUID": [region.proximityUUID UUIDString],
+        @"uuid": [region.proximityUUID UUIDString],
         @"major": major,
         @"minor": minor,
     };
@@ -58,7 +58,7 @@
 
 + (CLBeaconRegion * _Nullable) regionFromDictionary:(NSDictionary*) dict {
     NSString *identifier = dict[@"identifier"];
-    NSString *proximityUUID = dict[@"proximityUUID"];
+    NSString *proximityUUID = dict[@"uuid"];
     NSNumber *major = dict[@"major"];
     NSNumber *minor = dict[@"minor"];
     
@@ -129,9 +129,9 @@
         case kCLAuthorizationStatusNotDetermined:
             return @"notDetermined";
         case kCLAuthorizationStatusAuthorizedAlways:
-            return @"autorizedAlways";
+            return @"authorizedAlways";
         case kCLAuthorizationStatusAuthorizedWhenInUse:
-            return @"autorizedWhenInUse";
+            return @"authorizedWhenInUse";
     }
 }
 

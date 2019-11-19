@@ -10,6 +10,14 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import <CoreLocation/CoreLocation.h>
 
+//#define VERBOSE
+
+#ifdef VERBOSE
+  #define CBLog(...) NSLog(@"%s %@", __PRETTY_FUNCTION__, [NSString stringWithFormat:__VA_ARGS__])
+#else
+  #define CBLog(...)
+#endif
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CBUtils : NSObject
