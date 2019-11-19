@@ -1,5 +1,3 @@
-import { NativeModules } from 'react-native';
-
-const { CBBeacon } = NativeModules;
+const CBBeacon = require('./src/beacon.manager');
 
 export default CBBeacon;
