@@ -17,14 +17,33 @@ export default class App extends Component<{}> {
     status: 'starting',
     message: '--'
   };
+
   componentDidMount() {
+    CBBeacon.didChangeAuthorizationStatus((status) => {
+      console.log('AuthorizationStatus: ' + status);
+
+      if (status === 'authorizedAlways') {
+        console.log('OK, start ranging beacons');
+        CBBeacon.startRangingBeaconsInRegion({
+          identifier: 'Cubeacon',
+          uuid: 'CB10023F-A318-3394-4199-A8730C7C1AEC'
+        });
+      }
+    })
+    CBBeacon.didRangeBeacons((region, beacons) => {
+      console.log(region.identifier + ' : ' + beacons.length);
+    });
+    CBBeacon.initialize();
     CBBeacon.sampleMethod('Testing', 123, (message) => {
       this.setState({
         status: 'native callback received',
         message
       });
     });
+
+    CBBeacon.requestAlwaysAuthorization();
   }
+
   render() {
     return (
       <View style={styles.container}>
