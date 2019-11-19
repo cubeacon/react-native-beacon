@@ -1,5 +1,6 @@
 #import <React/RCTBridgeModule.h>
+#import <React/RCTEventEmitter.h>
 
-@interface CBBeacon : NSObject <RCTBridgeModule>
+@interface CBBeacon : RCTEventEmitter <RCTBridgeModule>
 
 @end
