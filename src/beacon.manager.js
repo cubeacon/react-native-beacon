@@ -1,5 +1,7 @@
+// @flow
+
+import type EmitterSubscription from 'react-native/Libraries/vendor/emitter/EmitterSubscription';
 import {
-    EmitterSubscription,
     NativeModules,
     NativeEventEmitter
 } from 'react-native';
@@ -7,13 +9,13 @@ const BeaconManager = NativeModules.CBBeacon;
 const EventEmitter = new NativeEventEmitter(BeaconManager);
 
 import {
-    type AuthorizationStatusCallback,
+    type AuthorizationStatus,
     type ManagerState,
     type RegionState,
     type Proximity,
     type Region,
     type Beacon,
-    type AuthorizationCallback,
+    type AuthorizationStatusCallback,
     type RangingDidRangeBeaconsCallback,
     type MonitoringDidEnterRegionCallback,
     type MonitoringDidExitRegionCallback,
@@ -22,6 +24,10 @@ import {
 
 const sampleMethod = function (str: string, num: number, callback: (result: String) => void) {
     BeaconManager.sampleMethod(str, num, callback);
+}
+
+const initialize = function () {
+    BeaconManager.setup();
 }
 
 const requestAlwaysAuthorization = function () {
@@ -40,6 +46,14 @@ const locationServicesEnabled = function (callback: (enabled: boolean) => any): 
     return BeaconManager.locationServicesEnabled(callback);
 }
 
+const centralManagerDidUpdateState = function (callback: (state: ManagerState) => any): any {
+    return EventEmitter.addListener(
+        'centralManagerDidUpdateState',
+        callback,
+    );
+}
+
+// authorization
 const authorizationStatus = function (callback: (status: AuthorizationStatus) => any): any {
     return BeaconManager.authorizationStatus(callback);
 }
@@ -47,7 +61,7 @@ const authorizationStatus = function (callback: (status: AuthorizationStatus) =>
 const didChangeAuthorizationStatus = function (callback: AuthorizationStatusCallback): EmitterSubscription {
     return EventEmitter.addListener(
         'didChangeAuthorizationStatus',
-        callback,
+        data => callback(data),
     );
 }
 
@@ -55,21 +69,21 @@ const didChangeAuthorizationStatus = function (callback: AuthorizationStatusCall
 const didEnterRegion = function (callback: MonitoringDidEnterRegionCallback): EmitterSubscription {
     return EventEmitter.addListener(
         'didEnterRegion',
-        callback,
+        (data) => callback(data.region),
     );
 }
 
 const didExitRegion = function (callback: MonitoringDidExitRegionCallback): EmitterSubscription {
     return EventEmitter.addListener(
         'didExitRegion',
-        callback,
+        (data) => callback(data.region),
     );
 }
 
 const didDetermineState = function (callback: MonitoringDidDetermineStateCallback): EmitterSubscription {
     return EventEmitter.addListener(
         'didDetermineState',
-        callback,
+        (data) => callback(data.region, data.state),
     );
 }
 
@@ -89,7 +103,7 @@ const stopMonitoringForRegion = function (region: Region) {
 const didRangeBeacons = function (callback: RangingDidRangeBeaconsCallback): EmitterSubscription {
     return EventEmitter.addListener(
         'didRangeBeacons',
-        callback,
+        (data) => callback(data.region, data.beacons),
     );
 }
 
@@ -107,11 +121,13 @@ const stopRangingBeaconsInRegion = function (region: Region) {
 
 module.exports = {
     sampleMethod,
+    initialize,
     requestAlwaysAuthorization,
     requestWhenInUseAuthorization,
     openApplicationSettings,
     locationServicesEnabled,
     
+    centralManagerDidUpdateState,
     didChangeAuthorizationStatus,
     authorizationStatus,
 
