@@ -7,6 +7,8 @@
 //
 
 #import "CBUtils.h"
+#import <CoreBluetooth/CoreBluetooth.h>
+#import <CoreLocation/CoreLocation.h>
 
 @implementation CBUtils
 

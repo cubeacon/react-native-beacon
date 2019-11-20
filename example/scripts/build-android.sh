@@ -31,5 +31,14 @@ keytool \
   -validity 14000 \
   -dname 'CN=Android Debug,O=Android,C=US'
 
+keytool \
+  -importkeystore \
+  -srckeystore \
+  app/release.keystore \
+  -destkeystore \
+  app/release.keystore \
+  -deststoretype \
+  pkcs12
+
 # Run release build
 ./gradlew assembleRelease --console=plain -S
