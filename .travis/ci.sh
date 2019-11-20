@@ -16,10 +16,14 @@ esac
 ###################
 export NODEJS_ORG_MIRROR=http://nodejs.org/dist
 
-wget https://raw.githubusercontent.com/creationix/nvm/v0.31.0/nvm.sh -O ~/.nvm/nvm.sh
+wget https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/nvm.sh -O ~/.nvm/nvm.sh
 source ~/.nvm/nvm.sh
 
-nvm install 9.11.2
+nvm install 11.10.1
+
+nvm use 11.10.1
+
+npm install -g yarn
 
 yarn global add react-native-cli
 

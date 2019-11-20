@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {
     AuthorizationStatus,
     ManagerState,
@@ -8,6 +9,7 @@ import {
     MonitoringDidExitRegionCallback,
     MonitoringDidDetermineStateCallback,
 } from './beacon.types';
+/* eslint-enable */
 
 test('all region parameter value is undefined or null', () => {
     const region: Region = {
