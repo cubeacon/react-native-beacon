@@ -1,13 +1,14 @@
 // @flow
 
-import EmitterSubscription from 'react-native/Libraries/vendor/emitter/EmitterSubscription';
 import {
     NativeModules,
-    NativeEventEmitter
+    NativeEventEmitter,
+    EmitterSubscription // eslint-disable-line no-unused-vars
 } from 'react-native';
 const BeaconManager = NativeModules.CBBeacon;
 const EventEmitter = new NativeEventEmitter(BeaconManager);
 
+/* eslint-disable */
 import {
     AuthorizationStatus,
     ManagerState,
@@ -18,6 +19,7 @@ import {
     MonitoringDidExitRegionCallback,
     MonitoringDidDetermineStateCallback,
 } from './beacon.types';
+/* eslint-enable */
 
 const sampleMethod = function (str: string, num: number, callback: (result: String) => void) {
     BeaconManager.sampleMethod(str, num, callback);
@@ -43,7 +45,7 @@ const locationServicesEnabled = function (callback: (enabled: boolean) => any): 
     return BeaconManager.locationServicesEnabled(callback);
 }
 
-const centralManagerDidUpdateState = function (callback: (state: ManagerState) => any): any {
+const centralManagerDidUpdateState = function (callback: (state: ManagerState) => any): EmitterSubscription {
     return EventEmitter.addListener(
         'centralManagerDidUpdateState',
         callback,
@@ -116,7 +118,7 @@ const stopRangingBeaconsInRegion = function (region: Region) {
     BeaconManager.stopRangingBeaconsInRegion(region);
 }
 
-module.exports = {
+export default {
     sampleMethod,
     initialize,
     requestAlwaysAuthorization,

@@ -6,8 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src/ -d lib/",
-    "prepublish": "yarn run build"
+    "lint": "yarn eslint src/**"
   },
   "repository": {
     "type": "git",
@@ -29,11 +28,14 @@
     "react-native": ">=0.59.0-rc.0 <1.0.x"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.0",
-    "@babel/core": "^7.7.2",
-    "@babel/preset-flow": "^7.0.0",
+    "@types/react-native": "^0.60.22",
+    "@typescript-eslint/eslint-plugin": "^2.8.0",
+    "@typescript-eslint/parser": "^2.0.0",
+    "eslint": "^6.6.0",
+    "eslint-plugin-react": "^7.16.0",
     "flow-bin": "^0.112.0",
     "react": "^16.8.3",
-    "react-native": "^0.59.10"
+    "react-native": "^0.59.10",
+    "typescript": "^3.7.2"
   }
 }
