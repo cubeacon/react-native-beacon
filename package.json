@@ -5,7 +5,9 @@
   "description": "React Native plugin for scanning beacon (iBeacon platform) devices on Android and iOS.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src/ -d lib/",
+    "prepublish": "yarn run build"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,10 @@
     "react-native": ">=0.59.0-rc.0 <1.0.x"
   },
   "devDependencies": {
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/preset-flow": "^7.0.0",
+    "flow-bin": "^0.112.0",
     "react": "^16.8.3",
     "react-native": "^0.59.10"
   }

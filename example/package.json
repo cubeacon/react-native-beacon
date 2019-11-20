@@ -5,7 +5,16 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "postinstall": "node ../scripts/examples_postinstall.js"
+    "postinstall": "node ../scripts/examples_postinstall.js",
+    "preinstall": "node scripts/pre-install.js",
+    "appium": "appium",
+    "build:android": "scripts/build-android.sh",
+    "build:ios": "scripts/build-ios.sh",
+    "test:android": "appium-helper --platform android",
+    "test:ios": "appium-helper --platform ios",
+    "test:local-e2e": "OS=both scripts/run-local-tests.sh",
+    "run-emulator:android": "scripts/run-android-emulator.sh",
+    "kill-emulator:android": "scripts/kill-android-emulator.sh"
   },
   "dependencies": {
     "react": "16.8.3",
@@ -13,12 +22,24 @@
     "react-native-beacon": "file:../"
   },
   "devDependencies": {
+    "@babel/cli": "^7.7.0",
     "@babel/core": "^7.7.2",
+    "@babel/preset-flow": "^7.0.0",
     "@babel/runtime": "^7.7.2",
+    "appium": "^1.15.1",
     "babel-jest": "^24.9.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react-native": "^4.0.1",
+    "babel-preset-react-native-stage-0": "^1.0.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "flow-bin": "^0.112.0",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.57.0",
-    "react-test-renderer": "16.8.3"
+    "prop-types": "^15.7.2",
+    "react-test-renderer": "16.8.3",
+    "tape-async": "^2.3.0",
+    "tipsi-appium-helper": "^3.3.0",
+    "webdriverio": "^5.16.7"
   },
   "jest": {
     "preset": "react-native"
