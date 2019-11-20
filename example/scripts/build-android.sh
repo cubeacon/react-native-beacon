@@ -24,21 +24,14 @@ keytool \
   -v \
   -genkey \
   -keystore app/release.keystore \
+  -keyalg RSA \
+  -storetype PKCS12 \
   -storepass android \
   -alias androidreleasekey \
   -keypass android \
-  -keysize 1024 \
+  -keysize 2048 \
   -validity 14000 \
   -dname 'CN=Android Debug,O=Android,C=US'
-
-keytool \
-  -importkeystore \
-  -srckeystore \
-  app/release.keystore \
-  -destkeystore \
-  app/release.keystore \
-  -deststoretype \
-  pkcs12
 
 # Run release build
 ./gradlew assembleRelease --console=plain -S
