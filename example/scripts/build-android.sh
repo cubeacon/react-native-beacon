@@ -2,6 +2,11 @@
 
 set -e
 
+# Accept the Android SDK license agreements
+echo y | sdkmanager "platforms;android-28" >/dev/null
+echo y | sdkmanager "platform-tools" >/dev/null
+echo y | sdkmanager "build-tools;28.0.3" >/dev/null
+
 # Go to android path
 cd android
 
