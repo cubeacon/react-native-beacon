@@ -24,11 +24,25 @@
   "devDependencies": {
     "@babel/cli": "^7.7.0",
     "@babel/core": "^7.7.2",
+    "@babel/plugin-proposal-class-properties": "^7.7.0",
+    "@babel/plugin-proposal-decorators": "^7.7.0",
+    "@babel/plugin-proposal-do-expressions": "^7.6.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.5.2",
+    "@babel/plugin-proposal-function-bind": "^7.2.0",
+    "@babel/plugin-proposal-function-sent": "^7.7.0",
+    "@babel/plugin-proposal-logical-assignment-operators": "^7.2.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.2.0",
+    "@babel/plugin-proposal-pipeline-operator": "^7.5.0",
+    "@babel/plugin-proposal-throw-expressions": "^7.2.0",
+    "@babel/plugin-syntax-import-meta": "^7.2.0",
+    "@babel/preset-env": "^7.7.1",
     "@babel/preset-flow": "^7.0.0",
+    "@babel/preset-react": "^7.7.0",
+    "@babel/preset-typescript": "^7.7.2",
     "@babel/runtime": "^7.7.2",
     "appium": "^1.15.1",
+    "appium-helper": "^0.0.3",
     "babel-jest": "^24.9.0",
-    "babel-preset-env": "^1.7.0",
     "babel-preset-react-native": "^4.0.1",
     "babel-preset-react-native-stage-0": "^1.0.1",
     "babel-preset-stage-0": "^6.24.1",
@@ -39,9 +53,13 @@
     "react-test-renderer": "16.8.3",
     "tape-async": "^2.3.0",
     "tipsi-appium-helper": "^3.3.0",
+    "wd": "^1.11.4",
     "webdriverio": "^5.16.7"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "transformIgnorePatterns": [
+      "node_modules/(?!react-native||@shoutem)"
+    ]
   }
 }

@@ -5,7 +5,7 @@
   "description": "React Native plugin for scanning beacon (iBeacon platform) devices on Android and iOS.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "lint": "yarn eslint src/**"
   },
   "repository": {
@@ -28,12 +28,22 @@
     "react-native": ">=0.59.0-rc.0 <1.0.x"
   },
   "devDependencies": {
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/plugin-proposal-class-properties": "^7.7.0",
+    "@babel/plugin-proposal-export-default-from": "^7.5.2",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-flow": "^7.0.0",
+    "@babel/preset-react": "^7.7.0",
+    "@babel/preset-typescript": "^7.7.2",
+    "@types/jest": "^24.0.23",
     "@types/react-native": "^0.60.22",
     "@typescript-eslint/eslint-plugin": "^2.8.0",
     "@typescript-eslint/parser": "^2.0.0",
     "eslint": "^6.6.0",
     "eslint-plugin-react": "^7.16.0",
     "flow-bin": "^0.112.0",
+    "jest": "^24.9.0",
     "react": "^16.8.3",
     "react-native": "^0.59.10",
     "typescript": "^3.7.2"
