@@ -2,7 +2,7 @@
 
 set -e
 
-npm i
+yarn install
 
 proj_dir=example
 
@@ -22,14 +22,14 @@ isMacOS() {
 
 # Install react-native-cli if not exist
 if ! type react-native > /dev/null; then
-  npm install -g react-native-cli
+  yarn global add react-native-cli
 fi
 
 # Remove existing tarball
 rm -rf *.tgz
 
 # Create new tarball
-npm pack
+yarn pack
 
 cd $proj_dir
 
@@ -38,7 +38,7 @@ cd $proj_dir
 ###################
 
 # Install dependencies
-rm -rf node_modules && npm install
+rm -rf node_modules && yarn install
 
 ###################
 # BEFORE BUILD    #
@@ -46,28 +46,28 @@ rm -rf node_modules && npm install
 
 # Run appium
 (pkill -9 -f appium || true)
-npm run appium > /dev/null 2>&1 &
+yarn run appium > /dev/null 2>&1 &
 
 ###################
 # BUILD           #
 ###################
 
 # Run Android emulator
-npm run run-emulator:android
+yarn run run-emulator:android
 trap 'adb shell reboot -p' 0
 
 # Build Android app
-npm run build:android
+yarn run build:android
 
 # Build iOS app
-isMacOS && npm run build:ios | xcpretty
+isMacOS && yarn run build:ios | xcpretty
 
 ###################
 # TESTS           #
 ###################
 
 # Run Android e2e tests
-npm run test:android
+yarn run test:android
 
 # Run iOS e2e tests
-isMacOS && npm run test:ios
+isMacOS && yarn run test:ios

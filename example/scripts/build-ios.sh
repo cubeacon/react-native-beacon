@@ -6,7 +6,7 @@ set -e
 cd ios
 
 # Remove build folder
-rm -rf ios/build
+rm -rf build
 
 # Run release build
 xcodebuild build \

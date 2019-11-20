@@ -21,21 +21,21 @@ source ~/.nvm/nvm.sh
 
 nvm install 9.11.2
 
-npm install -g react-native-cli
+yarn global add react-native-cli
 
-npm install
+yarn install
 
 # Remove existing tarball
 rm -rf *.tgz
 
-npm pack
+yarn pack
 
 ###################
 # INSTALL         #
 ###################
 cd example || exit
 
-rm -rf node_modules && npm install
+rm -rf node_modules && yarn install
 
 ###################
 # BEFORE CI       #
@@ -50,18 +50,18 @@ case "${TRAVIS_OS_NAME}" in
   ;;
 esac
 
-npm run appium > /dev/null 2>&1 &
+yarn run appium > /dev/null 2>&1 &
 
 ###################
 # CI              #
 ###################
 case "${TRAVIS_OS_NAME}" in
   osx)
-    npm run build:ios | xcpretty -c -f `xcpretty-travis-formatter`
-    npm run test:ios
+    yarn run build:ios | xcpretty -c -f `xcpretty-travis-formatter`
+    yarn run test:ios
   ;;
   linux)
-    npm run build:android
-    npm run test:android
+    yarn run build:android
+    yarn run test:android
   ;;
 esac
