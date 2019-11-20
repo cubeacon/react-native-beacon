@@ -1,3 +1,3 @@
-const CBBeacon = require('./src/beacon.manager');
+import CBBeacon from './src/beacon.manager';
 
 export default CBBeacon;

@@ -1,6 +1,6 @@
 // @flow
 
-import type EmitterSubscription from 'react-native/Libraries/vendor/emitter/EmitterSubscription';
+import EmitterSubscription from 'react-native/Libraries/vendor/emitter/EmitterSubscription';
 import {
     NativeModules,
     NativeEventEmitter
@@ -9,17 +9,14 @@ const BeaconManager = NativeModules.CBBeacon;
 const EventEmitter = new NativeEventEmitter(BeaconManager);
 
 import {
-    type AuthorizationStatus,
-    type ManagerState,
-    type RegionState,
-    type Proximity,
-    type Region,
-    type Beacon,
-    type AuthorizationStatusCallback,
-    type RangingDidRangeBeaconsCallback,
-    type MonitoringDidEnterRegionCallback,
-    type MonitoringDidExitRegionCallback,
-    type MonitoringDidDetermineStateCallback,
+    AuthorizationStatus,
+    ManagerState,
+    Region,
+    AuthorizationStatusCallback,
+    RangingDidRangeBeaconsCallback,
+    MonitoringDidEnterRegionCallback,
+    MonitoringDidExitRegionCallback,
+    MonitoringDidDetermineStateCallback,
 } from './beacon.types';
 
 const sampleMethod = function (str: string, num: number, callback: (result: String) => void) {
