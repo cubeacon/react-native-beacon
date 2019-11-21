@@ -39,21 +39,11 @@ RCT_EXPORT_MODULE()
     return sharedInstance;
 }
 
-RCT_EXPORT_METHOD(setup) {
-    dispatch_sync(dispatch_get_main_queue(),^ {
-        _bluetoothManager = [[CBCentralManager alloc] initWithDelegate:self queue:dispatch_get_main_queue()];
-        
-        _locationManager = [[CLLocationManager alloc] init];
-        _locationManager.delegate = self;
-        
-        CBLog(@"BEACON: initialized");
-    });
-}
-
 - (NSArray<NSString *> *)supportedEvents {
     return @[
         @"centralManagerDidUpdateState",
         @"didChangeAuthorizationStatus",
+        @"onBeaconServiceConnect",
         @"didRangeBeacons",
         @"didEnterRegion",
         @"didExitRegion",
@@ -68,6 +58,36 @@ RCT_EXPORT_METHOD(setup) {
 RCT_EXPORT_METHOD(sampleMethod:(NSString *)stringArgument numberParameter:(nonnull NSNumber *)numberArgument callback:(RCTResponseSenderBlock)callback) {
     // TODO: Implement some actually useful functionality
     callback(@[[NSString stringWithFormat: @"numberArgument: %@ stringArgument: %@", numberArgument, stringArgument]]);
+}
+
+RCT_EXPORT_METHOD(setup) {
+    dispatch_sync(dispatch_get_main_queue(),^ {
+        _bluetoothManager = [[CBCentralManager alloc] initWithDelegate:self queue:dispatch_get_main_queue()];
+        
+        _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;
+        
+        [self sendEventWithName:@"onBeaconServiceConnect" body:nil];
+        
+        CBLog(@"BEACON: initialized");
+    });
+}
+
+RCT_EXPORT_METHOD(close) {
+    if (self.regionMonitoring.count > 0) {
+        [self.regionMonitoring enumerateObjectsUsingBlock:^(CLBeaconRegion * _Nonnull region, NSUInteger idx, BOOL * _Nonnull stop) {
+            [self.locationManager stopMonitoringForRegion:region];
+        }];
+    }
+    
+    if (self.regionRanging.count > 0) {
+        [self.regionRanging enumerateObjectsUsingBlock:^(CLBeaconRegion * _Nonnull region, NSUInteger idx, BOOL * _Nonnull stop) {
+            [self.locationManager stopRangingBeaconsInRegion:region];
+        }];
+    }
+    
+    self.locationManager.delegate = nil;
+    self.bluetoothManager.delegate = nil;
 }
 
 RCT_EXPORT_METHOD(requestAlwaysAuthorization) {
@@ -87,6 +107,40 @@ RCT_EXPORT_METHOD(requestWhenInUseAuthorization) {
 RCT_EXPORT_METHOD(openApplicationSettings) {
     CBLog(@"BEACON: openApplicationSettings");
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+}
+
+RCT_EXPORT_METHOD(openLocationSettings) {
+    // do nothing
+    
+    // Beware, this is considered as a private API and Apple will rejecte your application
+    // Uncomment these codes below if your want to publish this app privately
+    /*
+    dispatch_sync(dispatch_get_main_queue(),^ {
+        NSString *settingsUrl= @"App-Prefs:root=Privacy&path=LOCATION";
+        if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:settingsUrl] options:@{} completionHandler:^(BOOL success) {
+                NSLog(@"Location settings opened");
+            }];
+        }
+    });
+    */
+}
+
+RCT_EXPORT_METHOD(openBluetoothSettings) {
+    // do nothing
+    
+    // Beware, this is considered as a private API and Apple will rejecte your application
+    // Uncomment these codes below if your want to publish this app privately
+    /*
+    dispatch_sync(dispatch_get_main_queue(),^ {
+        NSString *settingsUrl= @"App-Prefs:root=Bluetooth";
+        if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:settingsUrl] options:@{} completionHandler:^(BOOL success) {
+                NSLog(@"Bluetooth settings opened");
+            }];
+        }
+    });
+    */
 }
 
 #pragma mark Parameter Checker

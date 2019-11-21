@@ -31,7 +31,7 @@
     
     NSNumber *rssi = [NSNumber numberWithInteger:beacon.rssi];
     return @{
-        @"proximityUUID": [beacon.proximityUUID UUIDString],
+        @"uuid": [beacon.proximityUUID UUIDString],
         @"major": beacon.major,
         @"minor": beacon.minor,
         @"rssi": rssi,
