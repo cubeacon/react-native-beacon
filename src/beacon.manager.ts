@@ -29,6 +29,10 @@ const initialize = function () {
     BeaconManager.setup();
 }
 
+const dispose = function () {
+    BeaconManager.close();
+}
+
 const requestAlwaysAuthorization = function () {
     BeaconManager.requestAlwaysAuthorization();
 }
@@ -41,6 +45,14 @@ const openApplicationSettings = function () {
     BeaconManager.openApplicationSettings();
 }
 
+const openLocationSettings = function () {
+    BeaconManager.openLocationSettings();
+}
+
+const openBluetoothSettings = function () {
+    BeaconManager.openBluetoothSettings();
+}
+
 const locationServicesEnabled = function (callback: (enabled: boolean) => any): any {
     return BeaconManager.locationServicesEnabled(callback);
 }
@@ -48,6 +60,13 @@ const locationServicesEnabled = function (callback: (enabled: boolean) => any): 
 const centralManagerDidUpdateState = function (callback: (state: ManagerState) => any): EmitterSubscription {
     return EventEmitter.addListener(
         'centralManagerDidUpdateState',
+        callback,
+    );
+}
+
+const onBeaconServiceConnect = function (callback: () => void): EmitterSubscription {
+    return EventEmitter.addListener(
+        'onBeaconServiceConnect',
         callback,
     );
 }
@@ -121,23 +140,29 @@ const stopRangingBeaconsInRegion = function (region: Region) {
 export default {
     sampleMethod,
     initialize,
+    dispose,
+
     requestAlwaysAuthorization,
     requestWhenInUseAuthorization,
     openApplicationSettings,
-    locationServicesEnabled,
+    openLocationSettings,
+    openBluetoothSettings,
     
+    locationServicesEnabled,
+    authorizationStatus,
+    
+    onBeaconServiceConnect,
     centralManagerDidUpdateState,
     didChangeAuthorizationStatus,
-    authorizationStatus,
-
     didEnterRegion,
     didExitRegion,
     didDetermineState,
+    didRangeBeacons,
+    
     startMonitoringForRegion,
     startMonitoringForRegions,
     stopMonitoringForRegion,
 
-    didRangeBeacons,
     startRangingBeaconsInRegion,
     startRangingBeaconsInRegions,
     stopRangingBeaconsInRegion
