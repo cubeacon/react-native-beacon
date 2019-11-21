@@ -19,29 +19,47 @@ export default class App extends Component<{}> {
   };
 
   componentDidMount() {
+    CBBeacon.locationServicesEnabled((flag) => {
+      console.log('LocationServices: ' + flag);
+      if (!flag) {
+        CBBeacon.openLocationSettings();
+      } else {
+        CBBeacon.requestAlwaysAuthorization();
+      }
+    });
+    CBBeacon.centralManagerDidUpdateState((state) => {
+      console.log('BluetoothState: ' + state);
+
+      if (state === 'powerOff') {
+        CBBeacon.openBluetoothSettings();
+      }
+    });
     CBBeacon.didChangeAuthorizationStatus((status) => {
       console.log('AuthorizationStatus: ' + status);
 
       if (status === 'authorizedAlways') {
         console.log('OK, start ranging beacons');
-        CBBeacon.startRangingBeaconsInRegion({
-          identifier: 'Cubeacon',
-          uuid: 'CB10023F-A318-3394-4199-A8730C7C1AEC'
-        });
       }
-    })
+    });
     CBBeacon.didRangeBeacons((region, beacons) => {
       console.log(region.identifier + ' : ' + beacons.length);
     });
+
     CBBeacon.initialize();
+    CBBeacon.onBeaconServiceConnect(() => {
+      console.log('BeaconServiceConnected');
+
+      CBBeacon.startRangingBeaconsInRegion({
+        identifier: 'Cubeacon',
+        uuid: 'CB10023F-A318-3394-4199-A8730C7C1AEC'
+      });
+    });
     CBBeacon.sampleMethod('Testing', 123, (message) => {
       this.setState({
         status: 'native callback received',
         message
       });
     });
-
-    CBBeacon.requestAlwaysAuthorization();
   }
 
   render() {
