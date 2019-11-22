@@ -10,7 +10,7 @@
 
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
-import CBBeacon from 'react-native-beacon';
+import BeaconManager from 'react-native-beacon';
 
 export default class App extends Component<{}> {
   state = {
@@ -19,42 +19,43 @@ export default class App extends Component<{}> {
   };
 
   componentDidMount() {
-    CBBeacon.locationServicesEnabled((flag) => {
-      console.log('LocationServices: ' + flag);
-      if (!flag) {
-        CBBeacon.openLocationSettings();
-      } else {
-        CBBeacon.requestAlwaysAuthorization();
-      }
+    BeaconManager.Listener.onBeaconServiceConnect(() => {
+      console.log('BeaconServiceConnected');
+
+      BeaconManager.Ranging.startRangingBeaconsInRegion({
+        identifier: 'Cubeacon',
+        uuid: 'CB10023F-A318-3394-4199-A8730C7C1AEC'
+      });
     });
-    CBBeacon.centralManagerDidUpdateState((state) => {
+    BeaconManager.Listener.bluetoothDidUpdateState((state) => {
       console.log('BluetoothState: ' + state);
 
       if (state === 'powerOff') {
-        CBBeacon.openBluetoothSettings();
+        BeaconManager.BluetoothService.openBluetoothSettings();
       }
     });
-    CBBeacon.didChangeAuthorizationStatus((status) => {
+    BeaconManager.Listener.didChangeAuthorizationStatus((status) => {
       console.log('AuthorizationStatus: ' + status);
 
       if (status === 'authorizedAlways') {
         console.log('OK, start ranging beacons');
       }
     });
-    CBBeacon.didRangeBeacons((region, beacons) => {
+    BeaconManager.Listener.didRangeBeacons((region, beacons) => {
       console.log(region.identifier + ' : ' + beacons.length);
     });
 
-    CBBeacon.initialize();
-    CBBeacon.onBeaconServiceConnect(() => {
-      console.log('BeaconServiceConnected');
-
-      CBBeacon.startRangingBeaconsInRegion({
-        identifier: 'Cubeacon',
-        uuid: 'CB10023F-A318-3394-4199-A8730C7C1AEC'
-      });
+    BeaconManager.LocationService.checkIfEnabled((flag) => {
+      console.log('LocationServices: ' + flag);
+      if (!flag) {
+        BeaconManager.LocationService.openLocationSettings();
+      } else {
+        BeaconManager.Authorization.requestAlwaysAuthorization();
+      }
     });
-    CBBeacon.sampleMethod('Testing', 123, (message) => {
+
+    BeaconManager.initialize();
+    BeaconManager.sampleMethod('Testing', 123, (message) => {
       this.setState({
         status: 'native callback received',
         message
@@ -65,7 +66,7 @@ export default class App extends Component<{}> {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>☆CBBeacon example☆</Text>
+        <Text style={styles.welcome}>Beacon Manager example☆</Text>
         <Text style={styles.instructions}>STATUS: {this.state.status}</Text>
         <Text style={styles.welcome}>☆NATIVE CALLBACK MESSAGE☆</Text>
         <Text style={styles.instructions}>{this.state.message}</Text>
