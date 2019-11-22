@@ -11,13 +11,13 @@ const EventEmitter = new NativeEventEmitter(BeaconManager);
 /* eslint-disable */
 import {
     AuthorizationStatus,
-    ManagerState,
+    BluetoothState,
     Region,
     AuthorizationStatusCallback,
-    RangingDidRangeBeaconsCallback,
-    MonitoringDidEnterRegionCallback,
-    MonitoringDidExitRegionCallback,
-    MonitoringDidDetermineStateCallback,
+    DidRangeBeaconsCallback,
+    DidEnterRegionCallback,
+    DidExitRegionCallback,
+    DidDetermineStateCallback,
 } from './beacon.types';
 /* eslint-enable */
 
@@ -33,108 +33,121 @@ const dispose = function () {
     BeaconManager.close();
 }
 
-const requestAlwaysAuthorization = function () {
-    BeaconManager.requestAlwaysAuthorization();
-}
-
-const requestWhenInUseAuthorization = function () {
-    BeaconManager.requestWhenInUseAuthorization();
-}
-
 const openApplicationSettings = function () {
     BeaconManager.openApplicationSettings();
 }
 
-const openLocationSettings = function () {
-    BeaconManager.openLocationSettings();
+class BluetoothService {
+    static checkBluetoothState(callback: (status: BluetoothState) => void) {
+        BeaconManager.bluetoothEnabled(callback);
+    }
+
+    static openBluetoothSettings() {
+        BeaconManager.openBluetoothSettings();
+    }
 }
 
-const openBluetoothSettings = function () {
-    BeaconManager.openBluetoothSettings();
+class LocationService {
+    static openLocationSettings() {
+        BeaconManager.openLocationSettings();
+    }
+
+    static checkIfEnabled(callback: (enabled: boolean) => void) {
+        BeaconManager.locationServicesEnabled(callback);
+    }
 }
 
-const locationServicesEnabled = function (callback: (enabled: boolean) => any): any {
-    return BeaconManager.locationServicesEnabled(callback);
+class Authorization {
+    static checkAuthorizationStatus(callback: (status: AuthorizationStatus) => void) {
+        BeaconManager.authorizationStatus(callback);
+    }
+
+    static requestAlwaysAuthorization() {
+        BeaconManager.requestAlwaysAuthorization();
+    }
+    
+    static requestWhenInUseAuthorization() {
+        BeaconManager.requestWhenInUseAuthorization();
+    }
 }
 
-const centralManagerDidUpdateState = function (callback: (state: ManagerState) => any): EmitterSubscription {
-    return EventEmitter.addListener(
-        'centralManagerDidUpdateState',
-        callback,
-    );
+class Monitoring {
+    static startMonitoringForRegion(region: Region) {
+        BeaconManager.startMonitoringForRegion(region);
+    }
+    
+    static startMonitoringForRegions(regions: Array < Region > ) {
+        BeaconManager.startMonitoringForRegions(regions);
+    }
+    
+    static stopMonitoringForRegion(region: Region) {
+        BeaconManager.stopMonitoringForRegion(region);
+    }
 }
 
-const onBeaconServiceConnect = function (callback: () => void): EmitterSubscription {
-    return EventEmitter.addListener(
-        'onBeaconServiceConnect',
-        callback,
-    );
+class Ranging {
+    static startRangingBeaconsInRegion(region: Region) {
+        BeaconManager.startRangingBeaconsInRegion(region);
+    }
+    
+    static startRangingBeaconsInRegions(regions: Array < Region > ) {
+        BeaconManager.startRangingBeaconsInRegions(regions);
+    }
+    
+    static stopRangingBeaconsInRegion(region: Region) {
+        BeaconManager.stopRangingBeaconsInRegion(region);
+    }
 }
 
-// authorization
-const authorizationStatus = function (callback: (status: AuthorizationStatus) => any): any {
-    return BeaconManager.authorizationStatus(callback);
-}
+class Listener {
+    static didRangeBeacons(callback: DidRangeBeaconsCallback): EmitterSubscription {
+        return EventEmitter.addListener(
+            'didRangeBeacons',
+            (data) => callback(data.region, data.beacons),
+        );
+    }
 
-const didChangeAuthorizationStatus = function (callback: AuthorizationStatusCallback): EmitterSubscription {
-    return EventEmitter.addListener(
-        'didChangeAuthorizationStatus',
-        data => callback(data),
-    );
-}
+    static didDetermineState(callback: DidDetermineStateCallback): EmitterSubscription {
+        return EventEmitter.addListener(
+            'didDetermineState',
+            (data) => callback(data.region, data.state),
+        );
+    }
 
-// monitoring
-const didEnterRegion = function (callback: MonitoringDidEnterRegionCallback): EmitterSubscription {
-    return EventEmitter.addListener(
-        'didEnterRegion',
-        (data) => callback(data.region),
-    );
-}
+    static didEnterRegion(callback: DidEnterRegionCallback): EmitterSubscription {
+        return EventEmitter.addListener(
+            'didEnterRegion',
+            (data) => callback(data.region),
+        );
+    }
+    
+    static didExitRegion(callback: DidExitRegionCallback): EmitterSubscription {
+        return EventEmitter.addListener(
+            'didExitRegion',
+            (data) => callback(data.region),
+        );
+    }
 
-const didExitRegion = function (callback: MonitoringDidExitRegionCallback): EmitterSubscription {
-    return EventEmitter.addListener(
-        'didExitRegion',
-        (data) => callback(data.region),
-    );
-}
+    static didChangeAuthorizationStatus(callback: AuthorizationStatusCallback): EmitterSubscription {
+        return EventEmitter.addListener(
+            'didChangeAuthorizationStatus',
+            data => callback(data),
+        );
+    }
 
-const didDetermineState = function (callback: MonitoringDidDetermineStateCallback): EmitterSubscription {
-    return EventEmitter.addListener(
-        'didDetermineState',
-        (data) => callback(data.region, data.state),
-    );
-}
-
-const startMonitoringForRegion = function (region: Region) {
-    BeaconManager.startMonitoringForRegion(region);
-}
-
-const startMonitoringForRegions = function (regions: Array < Region > ) {
-    BeaconManager.startMonitoringForRegions(regions);
-}
-
-const stopMonitoringForRegion = function (region: Region) {
-    BeaconManager.stopMonitoringForRegion(region);
-}
-
-// ranging
-const didRangeBeacons = function (callback: RangingDidRangeBeaconsCallback): EmitterSubscription {
-    return EventEmitter.addListener(
-        'didRangeBeacons',
-        (data) => callback(data.region, data.beacons),
-    );
-}
-
-const startRangingBeaconsInRegion = function (region: Region) {
-    BeaconManager.startRangingBeaconsInRegion(region);
-}
-
-const startRangingBeaconsInRegions = function (regions: Array < Region > ) {
-    BeaconManager.startRangingBeaconsInRegions(regions);
-}
-
-const stopRangingBeaconsInRegion = function (region: Region) {
-    BeaconManager.stopRangingBeaconsInRegion(region);
+    static bluetoothDidUpdateState(callback: (state: BluetoothState) => any): EmitterSubscription {
+        return EventEmitter.addListener(
+            'bluetoothDidUpdateState',
+            callback,
+        );
+    }
+    
+    static onBeaconServiceConnect(callback: () => void): EmitterSubscription {
+        return EventEmitter.addListener(
+            'onBeaconServiceConnect',
+            callback,
+        );
+    }
 }
 
 export default {
@@ -142,28 +155,12 @@ export default {
     initialize,
     dispose,
 
-    requestAlwaysAuthorization,
-    requestWhenInUseAuthorization,
     openApplicationSettings,
-    openLocationSettings,
-    openBluetoothSettings,
     
-    locationServicesEnabled,
-    authorizationStatus,
-    
-    onBeaconServiceConnect,
-    centralManagerDidUpdateState,
-    didChangeAuthorizationStatus,
-    didEnterRegion,
-    didExitRegion,
-    didDetermineState,
-    didRangeBeacons,
-    
-    startMonitoringForRegion,
-    startMonitoringForRegions,
-    stopMonitoringForRegion,
-
-    startRangingBeaconsInRegion,
-    startRangingBeaconsInRegions,
-    stopRangingBeaconsInRegion
+    BluetoothService,
+    LocationService,
+    Authorization,
+    Listener,
+    Monitoring,
+    Ranging,
 };

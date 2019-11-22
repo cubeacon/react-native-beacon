@@ -19,7 +19,6 @@ import android.util.SparseArray;
 
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.Callback;
-import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -54,7 +53,7 @@ public class CBBeaconModule extends ReactContextBaseJavaModule {
   private static final String DENIED = "denied";
   private static final String RESTRICTED = "restricted";
 
-  public static final String EVENT_CENTRAL_MANAGER_DID_UPDATE_STATE = "centralManagerDidUpdateState";
+  public static final String EVENT_BLUETOOTH_DID_UPDATE_STATE = "bluetoothDidUpdateState";
   private static final String EVENT_DID_CHANGE_AUTHORIZATION_STATUS = "didChangeAuthorizationStatus";
   private static final String EVENT_ON_BEACON_SERVICE_CONNECT = "onBeaconServiceConnect";
   private static final String EVENT_DID_RANGE_BEACONS = "didRangeBeacons";
@@ -63,7 +62,7 @@ public class CBBeaconModule extends ReactContextBaseJavaModule {
   private static final String EVENT_DID_DETERMINE_STATE_FOR_REGION = "didDetermineStateForRegion";
 
   private static final String KEY_REGION = "region";
-  private static final String KEY_STATE = "region";
+  private static final String KEY_STATE = "state";
   private static final String KEY_BEACONS = "beacons";
 
   private static final BeaconParser IBEACON_LAYOUT = new BeaconParser()
@@ -306,17 +305,22 @@ public class CBBeaconModule extends ReactContextBaseJavaModule {
             Object result = args[0];
             if (result instanceof Integer) {
               if ((Integer) result == Activity.RESULT_OK) {
-                sendEvent(EVENT_CENTRAL_MANAGER_DID_UPDATE_STATE, "powerOn");
+                sendEvent(EVENT_BLUETOOTH_DID_UPDATE_STATE, "powerOn");
               } else {
-                sendEvent(EVENT_CENTRAL_MANAGER_DID_UPDATE_STATE, "powerOff");
+                sendEvent(EVENT_BLUETOOTH_DID_UPDATE_STATE, "powerOff");
               }
             } else {
-              sendEvent(EVENT_CENTRAL_MANAGER_DID_UPDATE_STATE, "unauthorized");
+              sendEvent(EVENT_BLUETOOTH_DID_UPDATE_STATE, "unknown");
             }
           }
         });
 
     reactContext.startActivityForResult(intent, REQUEST_CODE_BLUETOOTH, null);
+  }
+
+  @ReactMethod
+  public void bluetoothEnabled(Callback callback) {
+    callback.invoke(checkBluetoothIfEnabled() ? "powerOn" : "powerOff");
   }
 
   @ReactMethod

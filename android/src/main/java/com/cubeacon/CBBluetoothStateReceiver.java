@@ -49,7 +49,7 @@ class CBBluetoothStateReceiver extends BroadcastReceiver {
     if (context.hasActiveCatalystInstance()) {
       context
           .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-          .emit(CBBeaconModule.EVENT_CENTRAL_MANAGER_DID_UPDATE_STATE, object);
+          .emit(CBBeaconModule.EVENT_BLUETOOTH_DID_UPDATE_STATE, object);
     }
   }
 
@@ -61,9 +61,12 @@ class CBBluetoothStateReceiver extends BroadcastReceiver {
         context.getSystemService(Context.BLUETOOTH_SERVICE);
     if (bluetoothManager != null) {
       BluetoothAdapter adapter = bluetoothManager.getAdapter();
-      if (adapter != null) {
-        state = adapter.getState();
+      if (adapter == null) {
+        sendEvent("unsupported");
+        return;
       }
+
+      state = adapter.getState();
     }
     this.sendState(state);
 

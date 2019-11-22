@@ -2,16 +2,16 @@
 
 export type AuthorizationStatus = |
     'authorizedAlways' |
-    'authorizedWhenInUse' |
+    'authorizedWhenInUse' | // ios only
     'denied' |
-    'notDetermined' |
+    'notDetermined' | // ios only
     'restricted';
 
-export type ManagerState = |
+export type BluetoothState = |
     'unknown' |
-    'resetting' |
+    'resetting' | // ios only
     'unsupported' |
-    'unauthorized' |
+    'unauthorized' | // ios only
     'powerOff' |
     'powerOn';
 
@@ -45,7 +45,7 @@ export type Beacon = {
 };
 
 export type AuthorizationStatusCallback = (status: AuthorizationStatus) => void;
-export type RangingDidRangeBeaconsCallback = (region: Region, beacons: Array < Beacon > ) => void;
-export type MonitoringDidEnterRegionCallback = (region: Region) => void;
-export type MonitoringDidExitRegionCallback = (region: Region) => void;
-export type MonitoringDidDetermineStateCallback = (region: Region, state: RegionState) => void;
+export type DidRangeBeaconsCallback = (region: Region, beacons: Array < Beacon > ) => void;
+export type DidEnterRegionCallback = (region: Region) => void;
+export type DidExitRegionCallback = (region: Region) => void;
+export type DidDetermineStateCallback = (region: Region, state: RegionState) => void;

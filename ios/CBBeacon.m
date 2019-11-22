@@ -13,6 +13,8 @@
 @property (strong, nonatomic) NSMutableArray<CLBeaconRegion*> *regionRanging;
 @property (strong, nonatomic) NSMutableArray<CLBeaconRegion*> *regionMonitoring;
 
+@property CBManagerState state;
+
 @end
 
 @implementation CBBeacon
@@ -41,7 +43,7 @@ RCT_EXPORT_MODULE()
 
 - (NSArray<NSString *> *)supportedEvents {
     return @[
-        @"centralManagerDidUpdateState",
+        @"bluetoothDidUpdateState",
         @"didChangeAuthorizationStatus",
         @"onBeaconServiceConnect",
         @"didRangeBeacons",
@@ -144,6 +146,14 @@ RCT_EXPORT_METHOD(openBluetoothSettings) {
 }
 
 #pragma mark Parameter Checker
+RCT_EXPORT_METHOD(bluetoothEnabled:(RCTResponseSenderBlock) callback) {
+    CBLog(@"BEACON: bluetoothEnabled");
+    if (!self.state) {
+        self.state = self.bluetoothManager.state;
+    }
+    callback(@[[CBUtils stringFromManagerState:self.state]]);
+}
+
 RCT_EXPORT_METHOD(locationServicesEnabled:(RCTResponseSenderBlock) callback) {
     CBLog(@"BEACON: locationServicesEnabled");
     callback(@[@([CLLocationManager locationServicesEnabled])]);
@@ -200,9 +210,10 @@ RCT_EXPORT_METHOD(stopRangingBeaconsInRegion:(NSDictionary *) dict) {
 
 #pragma mark Central Manager Delegate
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central {
+    self.state = central.state;
     NSString *stateDesc = [CBUtils stringFromManagerState:central.state];
-    CBLog(@"BEACON: centralManagerDidUpdateState %@", stateDesc);
-    [self sendEventWithName:@"centralManagerDidUpdateState" body:stateDesc];
+    CBLog(@"BEACON: bluetoothDidUpdateState %@", stateDesc);
+    [self sendEventWithName:@"bluetoothDidUpdateState" body:stateDesc];
 }
 
 #pragma mark Location Manager Delegate
