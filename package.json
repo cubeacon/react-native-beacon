@@ -5,7 +5,7 @@
   "description": "React Native plugin for scanning beacon (iBeacon platform) devices on Android and iOS.",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest && codecov",
     "lint": "yarn eslint src/**"
   },
   "repository": {
@@ -47,5 +47,9 @@
     "react": "^16.8.3",
     "react-native": "^0.59.10",
     "typescript": "^3.7.2"
+  },
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
   }
 }

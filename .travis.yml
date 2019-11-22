@@ -8,7 +8,11 @@ matrix:
     - language: node_js
       node_js:
         - "8.10"
-      script: .travis/ci_node.sh
+      install:
+        - npm install -g codecov
+      script: 
+        - .travis/ci_node.sh
+        - bash <(curl -s https://codecov.io/bash)
 
     # - os: osx
     #   language: objective-c
