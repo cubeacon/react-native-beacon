@@ -1,7 +1,13 @@
 package com.cubeacon;
 
+import android.support.annotation.VisibleForTesting;
+
+import com.facebook.react.bridge.JavaOnlyArray;
+import com.facebook.react.bridge.JavaOnlyMap;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableType;
+import com.facebook.react.bridge.WritableArray;
+import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeArray;
 import com.facebook.react.bridge.WritableNativeMap;
 
@@ -18,21 +24,47 @@ class CBBeaconUtils {
     return state == MonitorNotifier.INSIDE ? "inside" : state == MonitorNotifier.OUTSIDE ? "outside" : "unknown";
   }
 
-  static WritableNativeArray beaconsToArray(List<Beacon> beacons) {
+  static WritableArray beaconsToArray(List<Beacon> beacons) {
+    return beaconsToArray(beacons, false);
+  }
+
+  @VisibleForTesting
+  static WritableArray beaconsToArray(List<Beacon> beacons, boolean testing) {
     if (beacons == null) {
+      if (testing) {
+        return new JavaOnlyArray();
+      }
       return new WritableNativeArray();
     }
-    WritableNativeArray list = new WritableNativeArray();
+
+    WritableArray list;
+    if (testing) {
+      list = new JavaOnlyArray();
+    } else {
+      list = new WritableNativeArray();
+    }
+
     for (Beacon beacon : beacons) {
-      WritableNativeMap map = beaconToMap(beacon);
+      WritableMap map = beaconToMap(beacon, testing);
       list.pushMap(map);
     }
 
     return list;
   }
 
-  private static WritableNativeMap beaconToMap(Beacon beacon) {
-    WritableNativeMap map = new WritableNativeMap();
+  static WritableMap beaconToMap(Beacon beacon) {
+    return beaconToMap(beacon, false);
+  }
+
+  @VisibleForTesting
+  static WritableMap beaconToMap(Beacon beacon, boolean testing) {
+    WritableMap map;
+
+    if (testing) {
+      map = new JavaOnlyMap();
+    } else {
+      map = new WritableNativeMap();
+    }
 
     map.putString("uuid", beacon.getId1().toString().toUpperCase());
     map.putInt("major", beacon.getId2().toInt());
@@ -62,12 +94,22 @@ class CBBeaconUtils {
     return "far";
   }
 
-  static WritableNativeMap regionToMap(Region region) {
-    WritableNativeMap map = new WritableNativeMap();
+  static WritableMap regionToMap(Region region) {
+    return regionToMap(region, false);
+  }
+
+  @VisibleForTesting
+  static WritableMap regionToMap(Region region, boolean testing) {
+    WritableMap map;
+    if (testing) {
+      map = new JavaOnlyMap();
+    } else {
+      map = new WritableNativeMap();
+    }
 
     map.putString("identifier", region.getUniqueId());
     if (region.getId1() != null) {
-      map.putString("uuid", region.getId1().toString());
+      map.putString("uuid", region.getId1().toString().toUpperCase());
     }
     if (region.getId2() != null) {
       map.putInt("major", region.getId2().toInt());
