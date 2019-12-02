@@ -12,9 +12,11 @@ matrix:
       node_js:
         - "8.10"
       install:
+        - gem install coveralls-lcov
         - npm install -g codecov
       script: 
         - .travis/ci_node.sh
+        - coveralls-lcov --repo-token $COVERALLS_TOKEN coverage/lcov.info
         - bash <(curl -s https://codecov.io/bash)
 
     # - os: osx
