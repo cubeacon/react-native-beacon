@@ -29,8 +29,8 @@ export type Proximity = |
 export type Region = {
     identifier: string,
     uuid: string,
-    minor ? : number,
-    major ? : number,
+    minor?: number,
+    major?: number,
 };
 
 export type Beacon = {
@@ -39,13 +39,13 @@ export type Beacon = {
     major: number,
     proximity: Proximity,
     rssi: number,
-    txPower: number, // android only
+    txPower?: number, // android only
     accuracy: number,
-    macAddress ? : string, // android only
+    macAddress?: string, // android only
 };
 
 export type AuthorizationStatusCallback = (status: AuthorizationStatus) => void;
-export type DidRangeBeaconsCallback = (region: Region, beacons: Array < Beacon > ) => void;
+export type DidRangeBeaconsCallback = (region: Region, beacons: Array<Beacon>) => void;
 export type DidEnterRegionCallback = (region: Region) => void;
 export type DidExitRegionCallback = (region: Region) => void;
 export type DidDetermineStateCallback = (region: Region, state: RegionState) => void;
