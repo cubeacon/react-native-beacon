@@ -1,13 +1,13 @@
 /* eslint-disable */
 import {
     AuthorizationStatus,
-    ManagerState,
+    BluetoothState,
     Region,
     AuthorizationStatusCallback,
-    RangingDidRangeBeaconsCallback,
-    MonitoringDidEnterRegionCallback,
-    MonitoringDidExitRegionCallback,
-    MonitoringDidDetermineStateCallback,
+    DidRangeBeaconsCallback,
+    DidEnterRegionCallback,
+    DidExitRegionCallback,
+    DidDetermineStateCallback,
 } from './beacon.types';
 /* eslint-enable */
 
