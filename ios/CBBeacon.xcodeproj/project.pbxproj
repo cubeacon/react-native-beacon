@@ -11,7 +11,19 @@
 		C3097E2823853E2D005FFC43 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3097E2723853E2D005FFC43 /* CoreBluetooth.framework */; };
 		C3097E2A23853E33005FFC43 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3097E2923853E33005FFC43 /* CoreLocation.framework */; };
 		C3CEB9692383C3FA006F0712 /* CBUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C3CEB9682383C3FA006F0712 /* CBUtils.m */; };
+		C3E4F3E42395675E0099DE3B /* CBUtilsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C3E4F3E32395675E0099DE3B /* CBUtilsTests.m */; };
+		C3E4F3E62395675E0099DE3B /* libCBBeacon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 134814201AA4EA6300B7C361 /* libCBBeacon.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C3E4F3E72395675E0099DE3B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 58B511D31A9E6C8500147676 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 58B511DA1A9E6C8500147676;
+			remoteInfo = CBBeacon;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		58B511D91A9E6C8500147676 /* CopyFiles */ = {
@@ -33,6 +45,9 @@
 		C3097E2923853E33005FFC43 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreLocation.framework; sourceTree = DEVELOPER_DIR; };
 		C3CEB9672383C3FA006F0712 /* CBUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CBUtils.h; sourceTree = "<group>"; };
 		C3CEB9682383C3FA006F0712 /* CBUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CBUtils.m; sourceTree = "<group>"; };
+		C3E4F3E12395675E0099DE3B /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3E4F3E32395675E0099DE3B /* CBUtilsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CBUtilsTests.m; sourceTree = "<group>"; };
+		C3E4F3E52395675E0099DE3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +57,14 @@
 			files = (
 				C3097E2A23853E33005FFC43 /* CoreLocation.framework in Frameworks */,
 				C3097E2823853E2D005FFC43 /* CoreBluetooth.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3E4F3DE2395675E0099DE3B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3E4F3E62395675E0099DE3B /* libCBBeacon.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,8 +86,10 @@
 				C3CEB9682383C3FA006F0712 /* CBUtils.m */,
 				B3E7B5881CC2AC0600A0062D /* CBBeacon.h */,
 				B3E7B5891CC2AC0600A0062D /* CBBeacon.m */,
+				C3E4F3E22395675E0099DE3B /* UnitTests */,
 				134814211AA4EA7D00B7C361 /* Products */,
 				C3097E2623853E2D005FFC43 /* Frameworks */,
+				C3E4F3E12395675E0099DE3B /* UnitTests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -75,6 +100,15 @@
 				C3097E2723853E2D005FFC43 /* CoreBluetooth.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C3E4F3E22395675E0099DE3B /* UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				C3E4F3E32395675E0099DE3B /* CBUtilsTests.m */,
+				C3E4F3E52395675E0099DE3B /* Info.plist */,
+			);
+			path = UnitTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -97,6 +131,24 @@
 			productReference = 134814201AA4EA6300B7C361 /* libCBBeacon.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		C3E4F3E02395675E0099DE3B /* UnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C3E4F3EB2395675E0099DE3B /* Build configuration list for PBXNativeTarget "UnitTests" */;
+			buildPhases = (
+				C3E4F3DD2395675E0099DE3B /* Sources */,
+				C3E4F3DE2395675E0099DE3B /* Frameworks */,
+				C3E4F3DF2395675E0099DE3B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C3E4F3E82395675E0099DE3B /* PBXTargetDependency */,
+			);
+			name = UnitTests;
+			productName = UnitTests;
+			productReference = C3E4F3E12395675E0099DE3B /* UnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -108,6 +160,10 @@
 				TargetAttributes = {
 					58B511DA1A9E6C8500147676 = {
 						CreatedOnToolsVersion = 6.1.1;
+					};
+					C3E4F3E02395675E0099DE3B = {
+						CreatedOnToolsVersion = 11.2.1;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -125,9 +181,20 @@
 			projectRoot = "";
 			targets = (
 				58B511DA1A9E6C8500147676 /* CBBeacon */,
+				C3E4F3E02395675E0099DE3B /* UnitTests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C3E4F3DF2395675E0099DE3B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		58B511D71A9E6C8500147676 /* Sources */ = {
@@ -139,7 +206,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C3E4F3DD2395675E0099DE3B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3E4F3E42395675E0099DE3B /* CBUtilsTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C3E4F3E82395675E0099DE3B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 58B511DA1A9E6C8500147676 /* CBBeacon */;
+			targetProxy = C3E4F3E72395675E0099DE3B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		58B511ED1A9E6C8500147676 /* Debug */ = {
@@ -273,6 +356,54 @@
 			};
 			name = Release;
 		};
+		C3E4F3E92395675E0099DE3B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = UnitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cubeacon.UnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C3E4F3EA2395675E0099DE3B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = UnitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cubeacon.UnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -290,6 +421,15 @@
 			buildConfigurations = (
 				58B511F01A9E6C8500147676 /* Debug */,
 				58B511F11A9E6C8500147676 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C3E4F3EB2395675E0099DE3B /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3E4F3E92395675E0099DE3B /* Debug */,
+				C3E4F3EA2395675E0099DE3B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
