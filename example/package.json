@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "postinstall": "node ../scripts/examples_postinstall.js",
+    "postinstall": "node ../scripts/examples_postinstall.js && npx jetify",
     "preinstall": "node scripts/pre-install.js",
     "appium": "appium",
     "build:android": "scripts/build-android.sh",
@@ -19,7 +19,12 @@
   "dependencies": {
     "react": "16.8.3",
     "react-native": "0.59",
-    "react-native-beacon": "file:../"
+    "react-native-beacon": "file:../",
+    "react-native-gesture-handler": "^1.4.0",
+    "react-native-reanimated": "^1.4.0",
+    "react-native-screens": "^1.0.0-alpha.23",
+    "react-navigation": "^4.0.10",
+    "react-navigation-stack": "^1.10.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.0",
@@ -48,6 +53,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "flow-bin": "^0.112.0",
     "jest": "^24.9.0",
+    "jetifier": "^1.6.5",
     "metro-react-native-babel-preset": "^0.57.0",
     "prop-types": "^15.7.2",
     "react-test-renderer": "16.8.3",
