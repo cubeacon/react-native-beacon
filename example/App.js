@@ -9,13 +9,12 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, Navigator, Platform, StyleSheet, Text, View } from 'react-native';
 import BeaconManager from 'react-native-beacon';
 
 export default class App extends Component<{}> {
   state = {
-    status: 'starting',
-    message: '--'
+    beacons: undefined,
   };
 
   componentDidMount() {
@@ -43,6 +42,9 @@ export default class App extends Component<{}> {
     });
     BeaconManager.Listener.didRangeBeacons((region, beacons) => {
       console.log(region.identifier + ' : ' + beacons.length);
+      this.setState({
+        beacons: beacons
+      });
     });
 
     BeaconManager.LocationService.checkIfEnabled((flag) => {
@@ -55,21 +57,38 @@ export default class App extends Component<{}> {
     });
 
     BeaconManager.initialize();
-    BeaconManager.sampleMethod('Testing', 123, (message) => {
-      this.setState({
-        status: 'native callback received',
-        message
-      });
-    });
   }
 
   render() {
+    if (!this.state.beacons) {
+      return (
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <ActivityIndicator size="large" />
+        </View>
+      );
+    }
+
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Beacon Manager example☆</Text>
-        <Text style={styles.instructions}>STATUS: {this.state.status}</Text>
-        <Text style={styles.welcome}>☆NATIVE CALLBACK MESSAGE☆</Text>
-        <Text style={styles.instructions}>{this.state.message}</Text>
+        <FlatList
+          data={this.state.beacons}
+          renderItem={({item}) => 
+            <View>
+              <Text style={styles.label}>{item.uuid}</Text>
+              <View style={{flex: 1, flexDirection: 'row'}}>
+                <Text style={styles.detail}>Major: {item.major}</Text>
+                <Text style={styles.col3}>RSSI: {item.rssi}</Text>
+                <Text style={Platform.OS == 'android' ? styles.col3 : undefined}>{Platform.OS == 'android' ? `Tx Power: ${item.txPower}` : ''}</Text>
+              </View>
+              <View style={{flex: 1, flexDirection: 'row'}}>
+                <Text style={styles.detail}>Minor: {item.minor}</Text>
+                <Text style={styles.col3}>Accuracy: {item.accuracy.toFixed(2)}m</Text>
+                <Text style={Platform.OS == 'android' ? styles.col3 : undefined}>{Platform.OS == 'android' ? `${item.macAddress}` : ''}</Text>
+              </View>
+            </View>
+          } 
+          keyExtractor={(item, index) => index.toString()}
+        />
       </View>
     );
   }
@@ -78,18 +97,27 @@ export default class App extends Component<{}> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
+    paddingTop: 32
+   },
+   label: {
+     paddingTop: 8,
+     paddingLeft: 16,
+     paddingRight: 16,
+     paddingBottom: 8,
+     fontSize: 16,
+   },
+   detail: {
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingBottom: 8,
     color: '#333333',
-    marginBottom: 5,
+    flex: 2,
   },
+  col3: {
+   paddingLeft: 16,
+   paddingRight: 16,
+   paddingBottom: 8,
+   color: '#333333',
+   flex: 3,
+ },
 });
