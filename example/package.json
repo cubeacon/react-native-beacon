@@ -1,0 +1,71 @@
+{
+  "name": "example",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "postinstall": "node ../scripts/examples_postinstall.js && npx jetify",
+    "preinstall": "node scripts/pre-install.js",
+    "appium": "appium",
+    "build:android": "scripts/build-android.sh",
+    "build:ios": "scripts/build-ios.sh",
+    "test:android": "appium-helper --platform android",
+    "test:ios": "appium-helper --platform ios",
+    "test:local-e2e": "OS=both scripts/run-local-tests.sh",
+    "run-emulator:android": "scripts/run-android-emulator.sh",
+    "kill-emulator:android": "scripts/kill-android-emulator.sh"
+  },
+  "dependencies": {
+    "react": "16.8.3",
+    "react-native": "0.59",
+    "react-native-beacon": "file:../",
+    "react-native-gesture-handler": "^1.4.0",
+    "react-native-reanimated": "^1.4.0",
+    "react-native-screens": "^1.0.0-alpha.23",
+    "react-navigation": "^4.0.10",
+    "react-navigation-stack": "^1.10.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/plugin-proposal-class-properties": "^7.7.0",
+    "@babel/plugin-proposal-decorators": "^7.7.0",
+    "@babel/plugin-proposal-do-expressions": "^7.6.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.5.2",
+    "@babel/plugin-proposal-function-bind": "^7.2.0",
+    "@babel/plugin-proposal-function-sent": "^7.7.0",
+    "@babel/plugin-proposal-logical-assignment-operators": "^7.2.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.2.0",
+    "@babel/plugin-proposal-pipeline-operator": "^7.5.0",
+    "@babel/plugin-proposal-throw-expressions": "^7.2.0",
+    "@babel/plugin-syntax-import-meta": "^7.2.0",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-flow": "^7.0.0",
+    "@babel/preset-react": "^7.7.0",
+    "@babel/preset-typescript": "^7.7.2",
+    "@babel/runtime": "^7.7.2",
+    "appium": "^1.15.1",
+    "appium-helper": "^0.0.3",
+    "babel-jest": "^24.9.0",
+    "babel-preset-react-native": "^4.0.1",
+    "babel-preset-react-native-stage-0": "^1.0.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "flow-bin": "^0.112.0",
+    "jest": "^24.9.0",
+    "jetifier": "^1.6.5",
+    "metro-react-native-babel-preset": "^0.57.0",
+    "prop-types": "^15.7.2",
+    "react-test-renderer": "16.8.3",
+    "tape-async": "^2.3.0",
+    "tipsi-appium-helper": "^3.3.0",
+    "wd": "^1.11.4",
+    "webdriverio": "^5.16.7"
+  },
+  "jest": {
+    "preset": "react-native",
+    "transformIgnorePatterns": [
+      "node_modules/(?!react-native||@shoutem)"
+    ]
+  }
+}

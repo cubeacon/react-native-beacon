@@ -1,0 +1,46 @@
+matrix:
+  include:
+    - language: node_js
+      node_js:
+        - "10.13"
+      install:
+        - npm install -g codecov
+      script: 
+        - .travis/ci_node.sh
+
+    - language: node_js
+      node_js:
+        - "8.10"
+      install:
+        - gem install coveralls-lcov
+        - npm install -g codecov
+      script: 
+        - .travis/ci_node.sh
+        - coveralls-lcov --repo-token $COVERALLS_TOKEN coverage/lcov.info
+        - bash <(curl -s https://codecov.io/bash)
+
+    # - os: osx
+    #   language: objective-c
+    #   osx_image: xcode11.1
+    #   env:
+    #     - JOB_NAME=IOS
+    #   script: .travis/ci.sh
+
+    # - os: linux
+    #   language: android
+    #   jdk: oraclejdk8
+    #   sudo: required
+    #   android:
+    #     components:
+    #       - platform-tools
+    #       - tools
+    #       - build-tools-26.0.3
+    #       - android-21
+    #       - android-26
+    #       - sys-img-armeabi-v7a-android-21
+    #       - extra-android-m2repository
+    #       - extra-google-m2repository
+    #       - extra-google-google_play_services
+    #   env:
+    #     - JOB_NAME=ANDROID
+    #   script: .travis/ci.sh
