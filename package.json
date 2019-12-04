@@ -1,5 +1,5 @@
 {
-  "name": "react-native-beacon",
+  "name": "@eyro/react-native-beacon",
   "title": "React Native Beacon",
   "version": "1.0.0",
   "description": "React Native plugin for scanning beacon (iBeacon platform) devices on Android and iOS.",
@@ -15,7 +15,13 @@
     "baseUrl": "https://github.com/github_account/react-native-beacon"
   },
   "keywords": [
-    "react-native"
+    "react-native",
+    "iBeacon",
+    "beacon",
+    "beacons",
+    "beacon-android",
+    "beacon-ios",
+    "react-native-beacon"
   ],
   "author": {
     "name": "Alann Maulana",
