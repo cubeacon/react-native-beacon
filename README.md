@@ -1,6 +1,6 @@
-[![Build Status][travis-svg]][travis-url] [![FOSSA Status][fossa-svg]][fossa-url] [![codecov][codecov-svg]][codecov-url]
+![npm (scoped)][npm-svg] [![Build Status][travis-svg]][travis-url] ![GitHub][license-svg] [![FOSSA Status][fossa-svg]][fossa-url] [![codecov][codecov-svg]][codecov-url] [![Coverage Status][coveralls-svg]][coveralls-url] 
 
-# react-native-beacon
+# React Native Beacon
 
 ## Getting started
 
@@ -31,3 +31,7 @@ BeaconManager;
 [fossa-url]: https://app.fossa.com/projects/git%2Bgithub.com%2Fcubeacon%2Freact-native-beacon?ref=badge_shield
 [codecov-svg]: https://codecov.io/gh/cubeacon/react-native-beacon/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/cubeacon/react-native-beacon
+[coveralls-svg]: https://coveralls.io/repos/github/cubeacon/react-native-beacon/badge.svg?branch=master
+[coveralls-url]: https://coveralls.io/github/cubeacon/react-native-beacon?branch=master
+[npm-svg]: https://img.shields.io/npm/v/@eyro/react-native-beacon
+[license-svg]: https://img.shields.io/github/license/cubeacon/react-native-beacon
