@@ -6,7 +6,7 @@ import {
     Proximity,
     Beacon,
     RegionState,
-} from './beacon.types';
+} from '../src/beacon.types';
 /* eslint-enable */
 
 test('all region parameter value is undefined or null', () => {

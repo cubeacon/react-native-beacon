@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest && codecov",
-    "lint": "yarn eslint src/**"
+    "test-local": "jest --coverage --watchAll && codecov && genhtml -o coverage coverage/lcov.info && open coverage/index.html",
+    "lint": "yarn eslint src/** test/**"
   },
   "repository": {
     "type": "git",
@@ -17,8 +18,8 @@
     "react-native"
   ],
   "author": {
-    "name": "Your Name",
-    "email": "yourname@email.com"
+    "name": "Alann Maulana",
+    "email": "maulana@cubeacon.com"
   },
   "license": "MIT",
   "licenseFilename": "LICENSE",
@@ -49,7 +50,25 @@
     "typescript": "^3.7.2"
   },
   "jest": {
+    "preset": "react-native",
     "coverageDirectory": "./coverage/",
-    "collectCoverage": true
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.{js,ts}",
+      "!**/node_modules/**",
+      "!**/vendor/**"
+    ],
+    "transform": {
+      "node_modules/react-native/.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
+    },
+    "unmockedModulePathPatterns": [
+      "/node_modules/"
+    ],
+    "modulePathIgnorePatterns": [
+      "/example"
+    ],
+    "setupFiles": [
+      "./__mocks__/beacon.manager.mock.js"
+    ]
   }
 }
