@@ -439,7 +439,7 @@ public class CBBeaconModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void startMonitoringBeaconsInRegion(ReadableMap map) {
+  public void startMonitoringForRegion(ReadableMap map) {
     try {
       startMonitoring(map);
     } catch (RemoteException e) {
@@ -448,7 +448,7 @@ public class CBBeaconModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void startMonitoringBeaconsInRegions(ReadableArray array) {
+  public void startMonitoringForRegions(ReadableArray array) {
     try {
       for (int i = 0; i < array.size(); i++) {
         ReadableMap map = array.getMap(i);
@@ -467,7 +467,7 @@ public class CBBeaconModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void stopMonitoringBeaconsInRegion(ReadableMap map) {
+  public void stopMonitoringForRegion(ReadableMap map) {
     try {
       Region region = CBBeaconUtils.regionFromMap(map);
       stopMonitoringBeaconsInRegion(region);

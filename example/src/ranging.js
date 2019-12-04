@@ -1,18 +1,43 @@
-import React, { Component } from 'react';
-import { ActivityIndicator, FlatList, Navigator, Platform, StyleSheet, Text, View } from 'react-native';
+import React, {
+  Component
+} from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  Button,
+  Navigator,
+  Platform,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native';
 import BeaconManager from 'react-native-beacon';
 import 'react-native-gesture-handler';
 
 export default class RangingBeacons extends Component {
-    static navigationOptions = {
-        title: 'Ranging Beacons',
-    };
+  static navigationOptions = ({
+    navigation
+  }) => {
+    return {
+      title: 'Ranging',
+      headerRight: () => ( 
+        <Button 
+          onPress = {() => navigation.push('Monitoring')}
+          title = "Monitoring" 
+        />
+      ),
+    }
+  };
 
-    state = {
-        beacons: undefined,
-    };
+  state = {
+    beacons: undefined,
+  };
+
+  eventRanging: EmitterSubscription;
+  mounted = false;
 
   componentDidMount() {
+    this.mounted = true;
     BeaconManager.Listener.onBeaconServiceConnect(() => {
       console.log('BeaconServiceConnected');
 
@@ -35,11 +60,14 @@ export default class RangingBeacons extends Component {
         console.log('OK, start ranging beacons');
       }
     });
-    BeaconManager.Listener.didRangeBeacons((region, beacons) => {
+    this.eventRanging = BeaconManager.Listener.didRangeBeacons((region, beacons) => {
       console.log(region.identifier + ' : ' + beacons.length);
-      this.setState({
-        beacons: beacons
-      });
+
+      if (this.mounted) {
+        this.setState({
+          beacons: beacons
+        });
+      }
     });
 
     BeaconManager.LocationService.checkIfEnabled((flag) => {
@@ -52,6 +80,11 @@ export default class RangingBeacons extends Component {
     });
 
     BeaconManager.initialize();
+  }
+
+  componentWillUnmount() {
+    this.eventRanging.remove();
+    this.mounted = false;
   }
 
   render() {
@@ -92,15 +125,15 @@ export default class RangingBeacons extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-   },
-   label: {
-     paddingTop: 8,
-     paddingLeft: 16,
-     paddingRight: 16,
-     paddingBottom: 8,
-     fontSize: 16,
-   },
-   detail: {
+  },
+  label: {
+    paddingTop: 8,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingBottom: 8,
+    fontSize: 16,
+  },
+  detail: {
     paddingLeft: 16,
     paddingRight: 16,
     paddingBottom: 8,
@@ -108,10 +141,10 @@ const styles = StyleSheet.create({
     flex: 2,
   },
   col3: {
-   paddingLeft: 16,
-   paddingRight: 16,
-   paddingBottom: 8,
-   color: '#333333',
-   flex: 3,
- },
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingBottom: 8,
+    color: '#333333',
+    flex: 3,
+  },
 });

@@ -17,7 +17,7 @@ import {
     DidRangeBeaconsCallback,
     DidEnterRegionCallback,
     DidExitRegionCallback,
-    DidDetermineStateCallback,
+    DidDetermineStateForRegionCallback,
 } from './beacon.types';
 /* eslint-enable */
 
@@ -107,9 +107,9 @@ class Listener {
         );
     }
 
-    static didDetermineState(callback: DidDetermineStateCallback): EmitterSubscription {
+    static didDetermineStateForRegion(callback: DidDetermineStateForRegionCallback): EmitterSubscription {
         return EventEmitter.addListener(
-            'didDetermineState',
+            'didDetermineStateForRegion',
             (data) => callback(data.region, data.state),
         );
     }

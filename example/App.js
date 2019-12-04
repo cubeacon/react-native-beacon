@@ -14,11 +14,13 @@ import 'react-native-gesture-handler';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import RangingBeacons from './src/ranging'
+import MonitoringBeacons from './src/monitoring'
 
 const AppNavigator = createStackNavigator({
-  Home: {
-    screen: RangingBeacons,
-  },
+  Home: RangingBeacons,
+  Monitoring: MonitoringBeacons
+}, {
+  initialRouteName: 'Home'
 });
 
 // eslint-disable-next-line no-unused-vars

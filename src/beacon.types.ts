@@ -48,4 +48,4 @@ export type AuthorizationStatusCallback = (status: AuthorizationStatus) => void;
 export type DidRangeBeaconsCallback = (region: Region, beacons: Array<Beacon>) => void;
 export type DidEnterRegionCallback = (region: Region) => void;
 export type DidExitRegionCallback = (region: Region) => void;
-export type DidDetermineStateCallback = (region: Region, state: RegionState) => void;
+export type DidDetermineStateForRegionCallback = (region: Region, state: RegionState) => void;
