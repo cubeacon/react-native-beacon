@@ -136,8 +136,11 @@ public class CBBeaconModule extends ReactContextBaseJavaModule {
   private final ActivityEventListener activityEventListener = new ActivityEventListener() {
     @Override
     public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
-      mCallbacks.get(requestCode).invoke(resultCode);
-      mCallbacks.remove(requestCode);
+      Callback callback = mCallbacks.get(requestCode);
+      if (callback != null) {
+        callback.invoke(resultCode);
+        mCallbacks.remove(requestCode);
+      }
     }
 
     @Override
