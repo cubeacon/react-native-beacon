@@ -52,7 +52,7 @@
     "flow-bin": "^0.112.0",
     "jest": "^24.9.0",
     "react": "^16.8.3",
-    "react-native": "^0.59.10",
+    "react-native": "^0.62.3",
     "typescript": "^3.7.2"
   },
   "jest": {
