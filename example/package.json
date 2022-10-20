@@ -21,7 +21,7 @@
     "react-native": "0.62",
     "react-native-beacon": "file:../",
     "react-native-gesture-handler": "^1.4.0",
-    "react-native-reanimated": "^1.4.0",
+    "react-native-reanimated": "^2.10.0",
     "react-native-screens": "^1.0.0-alpha.23",
     "react-navigation": "^4.0.10",
     "react-navigation-stack": "^1.10.3"
